@@ -7,63 +7,58 @@
 <link th:replace="fragments/headLinks">
 </head>
 <body>
-	<div class="container-fuild">
+	<div class="container-fluid">
 		<div th:replace="fragments/navbar"></div>
-
 		<h2>Users</h2>
 		<ul class="nav nav-tabs">
-			<li class="nav-item"><a class="nav-link"
+			<li class="nav-item"><a class="nav-link tag"
 				th:classappend="${filter == 'all' ? 'active' : ''}" href="/users">All</a>
 			</li>
-			<li class="nav-item"><a class="nav-link"
+			<li class="nav-item"><a class="nav-link tag"
 				th:classappend="${filter == 'following' ? 'active' : ''}"
 				href="/users?filter=following">Following</a></li>
-			<li class="nav-item"><a class="nav-link"
+			<li class="nav-item"><a class="nav-link tag"
 				th:classappend="${filter == 'followers' ? 'active' : ''}"
 				href="/users?filter=followers">Followers</a></li>
 		</ul>
 		<div class="list-group" th:each="user:${users}">
-			<!-- <a th:href="@{/users/} + ${user.username}"
-				class="list-group-item list-group-iterm-action"> -->
 			<div class="list-group-item list-group-item-action">
 				<div class="d-flex w-100 justify-content-between">
 					<a class="username" th:href="@{/users/} + ${user.username}">
-						<h5 class="mb-1" style="color: white">
+						<h5 style="color: #1da1f2;">
 							<i class="fab fa-twitter"></i> @<span th:text="${user.username}"></span>
-						</h5> <span class="text-left" style="color: white"> <span
+						</h5> <span class="text-left" style="color: #1da1f2;"> <span
 							th:text="${user.firstName}"></span> <span
 							th:text="${user.lastName}"></span>
 					</span>
 					</a>
-
-					<div class="col col-sm-2 col-sm-offset-4 text-right">
-						<h5 class="mb-1">
-							<span th:text="${tweetCounts.get(user.username)}"></span>tweet(s)
-						</h5>
+					<div class="text-right">
+						<small> <span th:text="${tweetCounts.get(user.username)}"></span>
+							tweet(s)
+						</small>
 						<form th:action="@{/follow/} + ${user.username}"
-							th:if="${followingStatus.containsKey(user.username) && !followingStatus.get(user.username)}"
+							th:if="${followingStatus.containsKey(user.username) &&
+                !followingStatus.get(user.username)}"
 							method="post">
-							<button style="float: right" type="Submit"
-								class="btn btn-md btn-success">Follow</button>
+							<button style="float: right;" type="Submit"
+								class="btn btn-success">Follow</button>
 						</form>
 						<form th:action="@{/unfollow/} + ${user.username}"
-							th:if="${followingStatus.containsKey(user.username) && followingStatus.get(user.username)}"
+							th:if="${followingStatus.containsKey(user.username) &&
+                followingStatus.get(user.username)}"
 							method="post">
-							<button style="float: right" type="Submit"
-								class="btn btn-md btn-primary" id="unfollwo_btn">Following</button>
+							<button style="float: right;" type="Submit"
+								class="btn btn-primary unfollow_btn">Following</button>
 						</form>
 					</div>
 				</div>
 			</div>
 		</div>
-		<div th:if="${#lists.isEmpty(users) and filter == 'all'}">
-			<h3>No tweets have been created yet</h3>
-		</div>
 		<div th:if="${#lists.isEmpty(users) and filter == 'following'}">
-			<h3>No tweets have been created by those you're following</h3>
+			<h3>You are not following anyone</h3>
 		</div>
 		<div th:if="${#lists.isEmpty(users) and filter == 'followers'}">
-			<h3>No tweets have been created by you're following</h3>
+			<h3>You don't have any followers</h3>
 		</div>
 	</div>
 	<script th:replace="fragments/scriptLinks"></script>
