@@ -29,7 +29,7 @@
     </div>
     <div th:if="${success}">
       <h2>
-        <span class="text-success" th:utext="${success}"></span>
+        <span class="text-success" th:utext="*{success}"></span>
       </h2>
       <br />
       <form th:action="@{/login}" method="get">
